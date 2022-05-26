@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 import com.myproject.course.entities.Category;
 import com.myproject.course.entities.Order;
+import com.myproject.course.entities.OrderItem;
 import com.myproject.course.entities.Product;
 import com.myproject.course.entities.User;
 import com.myproject.course.entities.enums.OrderStatus;
 import com.myproject.course.repositories.CategoryRepository;
+import com.myproject.course.repositories.OrderItemRepository;
 import com.myproject.course.repositories.OrderRepository;
 import com.myproject.course.repositories.ProductRepository;
 import com.myproject.course.repositories.UserRepository;
@@ -32,6 +34,9 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -39,11 +44,11 @@ public class TestConfig implements CommandLineRunner{
 		Category cat2 = new Category(null, "Books");
 		Category cat3 = new Category(null, "Computers");
 		
-		Product p1 = new Product(null, "The Lord of the Ring", "high fantasy book", 400.0, "");
-		Product p2 = new Product(null, "Smart TV", "TV with resolution 4K", 400.0, "");
-		Product p3 = new Product(null, "Macbook Pro", "Apple powerfull laptop", 400.0, "");
-		Product p4 = new Product(null, "Pc Gamer", "gaming desktop", 400.0, "");
-		Product p5 = new Product(null, "Clean code", "Book for programmers", 400.0, "");
+		Product p1 = new Product(null, "The Lord of the Ring", "high fantasy book", 30.0, "");
+		Product p2 = new Product(null, "Smart TV", "TV with resolution 4K", 1399.0, "");
+		Product p3 = new Product(null, "Macbook Pro", "Apple powerfull laptop", 120.0, "");
+		Product p4 = new Product(null, "Pc Gamer", "gaming desktop", 4250.0, "");
+		Product p5 = new Product(null, "Clean code", "Book for programmers", 18.0, "");
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
@@ -66,5 +71,12 @@ public class TestConfig implements CommandLineRunner{
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		OrderItem oi1  = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2  = new OrderItem(o1, p3, 1, p4.getPrice());
+		OrderItem oi3  = new OrderItem(o2, p3, 2, p1.getPrice());
+		OrderItem oi4  = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 	}
 }
