@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.myproject.course.entities.Category;
 import com.myproject.course.entities.Order;
 import com.myproject.course.entities.OrderItem;
+import com.myproject.course.entities.Payment;
 import com.myproject.course.entities.Product;
 import com.myproject.course.entities.User;
 import com.myproject.course.entities.enums.OrderStatus;
@@ -65,7 +66,7 @@ public class TestConfig implements CommandLineRunner{
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "9888888", "123456");
 		User u2 = new User(null, "Alex Green", "alexgreen@gmail.com", "9777777", "123456");
 		
-		Order o1 = new Order(null, Instant.parse("2022-05-21T23:25:07Z"), OrderStatus.PAID, u1);
+		Order o1 = new Order(null, Instant.parse("2022-05-21T20:25:07Z"), OrderStatus.PAID, u1);
 		Order o2 = new Order(null, Instant.parse("2022-05-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
 		Order o3 = new Order(null, Instant.parse("2022-05-21T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1);
 		
@@ -78,5 +79,10 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4  = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2022-05-21T22:25:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
 	}
 }
